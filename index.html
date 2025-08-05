@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamar no WhatsApp</title>
+
+    <!-- Importando a fonte Poppins do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            /* Fundo gradiente escuro e sensual */
+            background: linear-gradient(-45deg, #2a021b, #1d0114, #0f000a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        /* Animação para o fundo */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .whatsapp-card {
+            display: flex;
+            align-items: center;
+            padding: 16px 32px 16px 16px;
+            background-color: #1a1a1a; /* Cor de carvão escuro */
+            border-radius: 36px; /* Cantos mais arredondados para o novo tamanho */
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
+            color: #f5f5f5; /* Texto branco */
+            transition: all 0.3s ease;
+            border: 1px solid #ff007f30; /* Borda sutil rosa */
+        }
+
+        .whatsapp-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 35px rgba(255, 0, 127, 0.2); /* Sombra rosa ao passar o mouse */
+        }
+
+        .profile-picture-container {
+            position: relative;
+            margin-right: 20px; /* Margem ajustada */
+        }
+
+        .profile-picture {
+            width: 70px; /* Tamanho aumentado */
+            height: 70px; /* Tamanho aumentado */
+            border-radius: 50%;
+            object-fit: cover;
+            /* Borda rosa vibrante */
+            border: 3px solid #ff007f;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background-color: #25d366; /* Cor verde do WhatsApp */
+            border-radius: 50%;
+            border: 3px solid #1a1a1a; /* Borda na cor do card */
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        .card-text {
+            font-size: 18px; /* Fonte aumentada */
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- O link agora tem um ID para ser facilmente encontrado pelo JavaScript -->
+    <a href="#" id="whatsapp-link" class="whatsapp-card" target="_blank">
+        
+        <div class="profile-picture-container">
+            <img src="https://i.ibb.co/BHTPc1GR/Whats-App-Image-2025-08-04-at-05-00-53.jpg" alt="Foto de Perfil da Kelen" class="profile-picture">
+            <div class="status-dot"></div>
+        </div>
+
+        <span class="card-text">
+            Chamar Kelen no WhatsApp
+        </span>
+
+    </a>
+
+    <!-- --- NOVO: LÓGICA DE ROTAÇÃO DE NÚMEROS --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- PASSO 1: Adicione seus números de telefone aqui ---
+            // Coloque quantos números quiser, sempre com o código do país (ex: 55 para o Brasil).
+            const phoneNumbers = [
+                '551195908-8025', // Exemplo 1
+                
+            ];
+
+            // Pega o link do WhatsApp pelo ID que adicionamos
+            const whatsappLink = document.getElementById('whatsapp-link');
+
+            // Pega o índice do último número usado do armazenamento local do navegador
+            // Se não houver nenhum, começa do índice 0 (o primeiro número da lista)
+            let currentIndex = localStorage.getItem('whatsappIndex');
+            currentIndex = currentIndex ? parseInt(currentIndex, 10) : 0;
+
+            // Define o link do botão com o número da vez
+            const currentNumber = phoneNumbers[currentIndex];
+            whatsappLink.href = `https://wa.me/${currentNumber}`;
+
+            // Calcula qual será o próximo índice para o próximo visitante
+            // O operador '%' (módulo) faz com que a contagem volte a 0 ao chegar no fim da lista
+            let nextIndex = (currentIndex + 1) % phoneNumbers.length;
+
+            // Salva o próximo índice no armazenamento local para o próximo uso
+            localStorage.setItem('whatsappIndex', nextIndex);
+        });
+    </script>
+
+</body>
+</html>
